@@ -1,7 +1,5 @@
 # NLW-Pocket-Java-Script
 
-- Projeto realizado durante meus estudos de Java Script ao decorrer da NLW Pocket trilha iniciante organizado e ofericido pela [Rocketseat](https://app.rocketseat.com.br/) .
-
 ---
 ## Linguagem de programação
 
