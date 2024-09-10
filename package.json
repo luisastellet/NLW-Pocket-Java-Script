@@ -1,0 +1,14 @@
+{
+  "name": "nlw-pocket-java-script",
+  "version": "1.0.0",
+  "description": "- Projeto realizado durante meus estudos de Java Script ao decorrer da NLW Pocket trilha iniciante organizado e ofericido pela [Rocketseat](https://app.rocketseat.com.br/) .",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^10.2.2"
+  }
+}
