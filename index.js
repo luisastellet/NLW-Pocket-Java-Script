@@ -1,38 +1,93 @@
-// hello, world
-// Comentário que não é interpretado
-
-// variáveis
-let mensagem = 2
-mensagem = "olá, luisa!!!"
-console.log(mensagem)
-
-// arrays, objeto
-let metas = [2, 3]
-
-console.log(metas[0] + metas[1]) // interpreta como número
-console.log(metas[0] + " " + metas[1]) // interpreta como string
+const { select, input, checkbox } = require('@inquirer/prompts')
 
 let meta = {
-    value : "ler um livro por mês",
-    checked : false,
-    log: (info) => {
-        console.log(info)
+    value: 'Tomar 3L de água por dia',
+    checked: false,
+}
+
+let metas = [ meta ]
+
+const cadastrarMeta = async () => {
+    const meta = await input({ 
+        message: "Digite a meta:"
+    })
+
+    if(meta.length == 0){
+        console.log("A meta não pode ser vazia.")
+        return
+    }
+
+    meta.push(
+        {
+            value: meta,
+            checked: false
+        }
+    )
+}
+
+const listarMetas = async () => {
+    const respostas = await checkbox(
+        {
+            message: "Use as setas para mudar de meta, o Space para marcar ou desmarcar e o Enter para finalizar essa etapa.",
+            choices: [...metas],
+            instructions: false
+        }
+    )
+
+    if(respostas.length == 0){
+        console.log("Nenhuma meta selecionada...")
+        return
+    }
+
+    metas.forEach(m => {
+        m.checked = false
+    })
+
+    respostas.forEach(resposta => {
+        const meta = metas.find((m) => {
+            return m.value == resposta 
+        })
+
+        meta.checked = true //se meta existir é pq meta é true, ou seja, m.value é igual resposta
+    })
+
+    console.log('Meta(s) marcadas como concluída(s)')
+}
+
+const start = async () => {
+
+    while(true){
+        
+        const opcao = await select({
+            message: "Menu >",
+            choices: [
+                {
+                    name: "Cadastrar meta",
+                    value: "cadastrar"
+                },
+                {
+                    name: "Listar metas",
+                    value: "listar"
+                },
+                {
+                    name: "Sair",
+                    value: "sair"
+                }
+            ]
+         })
+        
+        switch(opcao) {
+            case "cadastrar":
+                await cadastrarMeta()
+                break
+            case "listar":
+                await listarMetas()
+                break
+            case "sair":
+                console.log("Até a próxima!")
+                return
+        }
     }
 }
 
-meta.value = "não é mais ler um livro"
-meta.log(meta.value + "\n")
-
-// function
-//const criarMeta() = () => {}
-//function criarmeta() {}
-
-let metass = [
-    meta, 
-    {
-        value : "caminhar 20 minutos tosos os dias",
-        checked : false,
-    }
-]
-
-console.log(metass[0].value + "\n" + metass[1].value)
+start()
